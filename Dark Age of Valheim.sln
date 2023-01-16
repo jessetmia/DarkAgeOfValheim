@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dark Age of Valheim", "Dark Age of Valheim.csproj", "{B3548271-B7F2-49C2-BD84-A35836F7819B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3548271-B7F2-49C2-BD84-A35836F7819B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3548271-B7F2-49C2-BD84-A35836F7819B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3548271-B7F2-49C2-BD84-A35836F7819B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3548271-B7F2-49C2-BD84-A35836F7819B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {556F102D-0E62-4291-9201-2BE60E7170B7}
+	EndGlobalSection
+EndGlobal
