@@ -1,0 +1,9 @@
+{
+  "name": "Dark Age of Valheim",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/jessetmia",
+  "description": "Dark Age of Valheim Mod",
+  "dependencies": [
+    "WackyMole-WackyEpicMMOSystem-1.5.5"
+  ]
+}
