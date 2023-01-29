@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using EpicMMOSystem;
+using HarmonyLib;
 using System;
 
 namespace Dark_Age_of_Valheim;
@@ -32,4 +33,3 @@ public static class ExpGainBySkillRaise
         return Convert.ToInt32(exp * 10);
     }
 }
-
