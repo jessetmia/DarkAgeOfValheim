@@ -36,6 +36,11 @@
 		</When>
 	</Choose>
 
+	<ItemGroup>
+	  <Compile Remove="EpicLoot\EpicLoot.cs" />
+	  <Compile Remove="EpicLoot\MagicItemEffectDefinitions_Setup.cs" />
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.4.19" />
@@ -50,11 +55,20 @@
     <Reference Include="assembly_guiutils">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
     </Reference>
+    <Reference Include="assembly_guiutils">
+      <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
+    </Reference>
     <Reference Include="assembly_utils">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
+      <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
     </Reference>
     <Reference Include="assembly_valheim">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="EpicLoot">
+      <HintPath>Libs\EpicLoot.dll</HintPath>
+    </Reference>
+    <Reference Include="EpicMMOSystem">
+      <HintPath>Libs\EpicMMOSystem.dll</HintPath>
     </Reference>
 	<Reference Include="UnityEngine">
 		<HintPath>$(GamePath)\unstripped_corlib\UnityEngine.dll</HintPath>
@@ -80,9 +94,6 @@
 	<Reference Include="0Harmony">
 		<HintPath>$(ThunderStore)\core\0Harmony.dll</HintPath>
 	</Reference>
-    <Reference Include="EpicMMOSystem">
-      <HintPath>Libs\EpicMMOSystem.dll</HintPath>
-    </Reference>
     <Reference Include="EquipmentAndQuickSlots">
       <HintPath>Libs\EquipmentAndQuickSlots.dll</HintPath>
     </Reference>

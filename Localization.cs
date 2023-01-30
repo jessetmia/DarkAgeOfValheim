@@ -4,8 +4,7 @@ public class Localization
 {
     public Localization()
     {
-        var currentLanguage = global::Localization.instance.GetSelectedLanguage();
-        DarkAgeOfValheim.LLogger.LogInfo(currentLanguage.ToString());
+        //var currentLanguage = global::Localization.instance.GetSelectedLanguage();
     }
 
 }
