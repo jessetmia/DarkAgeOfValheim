@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using Dark_Age_of_Valheim.EpicLoot;
+using Dark_Age_of_Valheim.LevelSystem;
 using EpicLoot;
 using EpicMMOSystem;
 using HarmonyLib;
@@ -12,8 +13,6 @@ namespace Dark_Age_of_Valheim;
 
 public partial class GamePlayer
 {
-
-
 
     /**
      * 
@@ -54,7 +53,6 @@ public partial class GamePlayer
 
     public Dictionary<Parameter, int> statBuffs = new Dictionary<Parameter, int>();
 
-    public static event Action<int>? OnLevelUp;
 
     #region Singlton
     private static GamePlayer? _instance;
@@ -76,11 +74,12 @@ public partial class GamePlayer
 
     public GamePlayer()
     {
-        //foreach (Parameter stat in Enum.GetValues(typeof(Parameter)))
-        //{
-        //    DarkAgeOfValheim.LLogger.LogDebug(stat);
-        //    statBuffs.Add(stat, 0);
-        //}
+        this.Init();
+    }
+
+    private void Init()
+    {
+        LevelSystemPatch.OnLevelUp += LevelUpAnnouncement;
     }
 
     public void addBonusPointToParameter(Parameter parameter, int bonusPoints)
@@ -117,14 +116,20 @@ public partial class GamePlayer
         return 0;
     }
 
-    [HarmonyPostfix]
-    [HarmonyPatch(typeof(EpicMMOSystem.LevelSystem), nameof(EpicMMOSystem.LevelSystem.AddLevel))]
-    public static void FireOffLevelEvent(ref int count)
+    /*
+     * 
+     * Maybe every 10 levels? (level%10 == 0)
+     * Should be able to disable as well.
+     * Notifies clients that Player has leveled up.
+     * 
+     */
+    public void LevelUpAnnouncement(int level)
     {
-        DarkAgeOfValheim.LLogger.LogInfo("Level up!");
-        OnLevelUp?.Invoke(count);
+        DarkAgeOfValheim.LLogger.LogInfo("Calling LevelUpAnnouncement()");
+        Player localPlayer = Player.m_localPlayer;
+        string text = string.Format("Player {0} has reached level {1}",localPlayer.GetPlayerName(), level);
+        Chat.instance.SendText(Talker.Type.Normal, text);
     }
-
 }
 
 /**
