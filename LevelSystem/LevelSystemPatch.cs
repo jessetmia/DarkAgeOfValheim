@@ -4,6 +4,15 @@ using System;
 
 namespace Dark_Age_of_Valheim.LevelSystem;
 
+
+
+
+/*
+ * 
+ * Instead of saving level data as a knownText, we should look into saving it as a part of the player save file. Valheim Plus had solid example of how to do this. 
+ * 
+ */
+
 [HarmonyPatch(typeof(EpicMMOSystem.LevelSystem))]
 public static class LevelSystemPatch
 {

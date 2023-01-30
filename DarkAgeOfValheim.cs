@@ -55,7 +55,7 @@ public class DarkAgeOfValheim : BaseUnityPlugin
 
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            var playerLevel = GamePlayer.Instance;
+            //GamePlayer gamePlayer = GamePlayer.Instance;
         }
         catch (Exception e)
         {

@@ -82,16 +82,6 @@ public partial class GamePlayer
         LevelSystemPatch.OnLevelUp += LevelUpAnnouncement;
     }
 
-    public void addBonusPointToParameter(Parameter parameter, int bonusPoints)
-    {
-        if (!Player.m_localPlayer) return;
-        //In future should we look at not allowing buff cap to go past max? 
-        //int max = EpicMMOSystem.maxValueAttribute.Value;
-        //int setValue = Mathf.Clamp(value, 0, max);
-        //Player.m_localPlayer.m_knownTexts[$"{pluginKey}_{midleKey}_{parameter.ToString()}_bonus"] = bonusPoints.ToString();
-
-    }
-
     public int getBonusPointsForParameter(Parameter parameter)
     {
         switch(parameter)
@@ -125,19 +115,8 @@ public partial class GamePlayer
      */
     public void LevelUpAnnouncement(int level)
     {
-        DarkAgeOfValheim.LLogger.LogInfo("Calling LevelUpAnnouncement()");
         Player localPlayer = Player.m_localPlayer;
         string text = string.Format("Player {0} has reached level {1}",localPlayer.GetPlayerName(), level);
         Chat.instance.SendText(Talker.Type.Normal, text);
     }
 }
-
-/**
-  * 
-  * Strength = 0, Agility = 1, Intellect = 2, Body = 3
-  * Instead of adding a straight value, we should look at incorporating as a buff bonus.e.g.Base Parameter Strength = 200, Buff Bonus + 20. 
-  * This will also work with buff pots to stack on top of the base. 
-  * This will probably require me to rewrite EpicMMO to handle properly.
-  * Instead of saving as a knownText, we should probably just save a variable as it changes often. 
-  * 
-  **/

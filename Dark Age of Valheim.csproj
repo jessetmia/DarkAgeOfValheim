@@ -37,6 +37,7 @@
 	</Choose>
 
 	<ItemGroup>
+	  <Compile Remove="EpicLoot\EpicLoot.cs" />
 	  <Compile Remove="EpicLoot\MagicItemEffectDefinitions_Setup.cs" />
 	</ItemGroup>
 
