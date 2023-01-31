@@ -1,6 +1,8 @@
 ﻿using BepInEx;
+using Dark_Age_of_Valheim.Abilities;
 using Dark_Age_of_Valheim.EpicLoot;
 using Dark_Age_of_Valheim.LevelSystem;
+using Dark_Age_of_Valheim.Specalizations;
 using EpicLoot;
 using EpicMMOSystem;
 using HarmonyLib;
@@ -20,33 +22,20 @@ public partial class GamePlayer
      * Used for calculation of stats. E.G. getParameter(Parameter.Strenghth) + buffedStrength will yield actual stats.
      *
      */
-    protected int _buffedStrength = 0;
-    protected int _buffedAgility = 0;
-    protected int _buffedIntellect = 0;
-    protected int _buffedBody = 0;
 
-    protected string? _specalization;
+    public int buffedStrength { get; set; } = 0;
+    public int buffedAgility { get; set; } = 0;
+    public int buffedIntellect { get; set; } = 0;
+    public int buffedBody { get; set; } = 0;
 
-    public int buffedStrength
-    {
-        get { return _buffedStrength; }
-        set { _buffedStrength = value; }
-    }
-    public int buffedAgility
-    {
-        get { return _buffedAgility; }
-        set { _buffedAgility = value; }
-    }
-    public int buffedIntellect
-    {
-        get { return _buffedIntellect; }
-        set { _buffedIntellect = value; }
-    }
-    public int buffedBody
-    {
-        get { return _buffedBody; }
-        set { _buffedBody = value; }
-    }
+    //Player Class (Healer, Valkrye, Berserker, etc)
+    public ISpecalization? Specalization { get; set; } = null;
+
+    //Abilities the player has learned.
+    public IAbilities[]? Abilities { get; set; } = null;
+
+    //Points used to invest in the skill tree
+    public int? skillPoints { get; set; } = 0;
 
     public const string epicMMOPluginKey = "EpicMMOSystem";
     public const string middleKey = "LevelSystem";
@@ -107,16 +96,21 @@ public partial class GamePlayer
     }
 
     /*
-     * 
-     * Maybe every 10 levels? (level%10 == 0)
-     * Should be able to disable as well.
-     * Notifies clients that Player has leveled up.
-     * 
+     * Notifies clients that Player has leveled up every 10 levels.
      */
     public void LevelUpAnnouncement(int level)
     {
+        //Add config to enable level notifications 
+        if (level % 10 != 0) return;
         Player localPlayer = Player.m_localPlayer;
-        string text = string.Format("Player {0} has reached level {1}",localPlayer.GetPlayerName(), level);
-        Chat.instance.SendText(Talker.Type.Normal, text);
+        string text = string.Format("Player {0} has reached level {1}!", localPlayer.GetPlayerName(), level);
+        Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "<color=#424242>Notice</color>", text, PrivilegeManager.GetNetworkUserId());
+    }
+
+
+    //@TODO: Move this to the player save file instead of random text.
+    public void savePlayer()
+    {
+
     }
 }

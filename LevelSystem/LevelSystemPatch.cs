@@ -9,6 +9,8 @@ namespace Dark_Age_of_Valheim.LevelSystem;
 
 /*
  * 
+ * @TODO: Rewrite level system to be event based. Current implementation is frustrating to work with. Stats should be loaded onto the character, not loaded every second
+ * the game is running. The only time recalc should be called is if the points change which could be handled by events.
  * Instead of saving level data as a knownText, we should look into saving it as a part of the player save file. Valheim Plus had solid example of how to do this. 
  * 
  */
@@ -35,7 +37,8 @@ public static class LevelSystemPatch
      * @TODO: Refactor so that system assigns freepoints on levelup event instead. 
      * The system calculates how many points a player should have based on their level. If they have extra points due to buffs
      * This was initially included in the calculation. This system removes the bonus points so that system only calculates the base
-     * points for the MMO system. 
+     * points for the MMO system. I thought to make this system closer to DAoCs where you have primary, secondary and tertiary stats that
+     * increase on level, but I prefer the thought of giving players the ability to customize their builds to the fullest. 
      * 
      */
     [HarmonyPostfix]
