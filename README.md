@@ -21,4 +21,9 @@ EpicMMO Level up now fires an Action that can be subscribed to.
 Implemented basic localization
 More sophisticated stat assignment on EpicLoot drops
 Class based system (Bonus to skills/abilities)
-Skill Tree?
+Talent Tree (PoE-esque?)
+Custom SkillLines (StormCalling, Beastcraft)
+Custom Mines per zone //https://valheim.thunderstore.io/package/GoldenJude/Mineshafts/
+Custom dungeons
+Static map? Start with Thid for testing. 
+Modify spears to be useful

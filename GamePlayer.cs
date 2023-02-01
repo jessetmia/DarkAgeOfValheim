@@ -32,7 +32,7 @@ public partial class GamePlayer
     public ISpecalization? Specalization { get; set; } = null;
 
     //Abilities the player has learned.
-    public IAbilities[]? Abilities { get; set; } = null;
+    public AbilityHandler[]? Abilities { get; set; } = null;
 
     //Points used to invest in the skill tree
     public int? skillPoints { get; set; } = 0;

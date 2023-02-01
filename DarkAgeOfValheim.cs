@@ -1,10 +1,14 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using Dark_Age_of_Valheim.Specalizations;
 using EpicLoot.Data;
+using fastJSON;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace Dark_Age_of_Valheim;
@@ -22,6 +26,7 @@ public class DarkAgeOfValheim : BaseUnityPlugin
     internal const string MOD_NAME = "Dark Age of Valheim";
     internal const string MOD_VERSION = "1.0.0";
     internal const string MOD_DESCRIPTION = "Dark Age of Valheim TC for Valheim";
+    internal const string DATA_LOCATION = "Data";
 
     private Harmony _harmony = new(MOD_GUID);
 
@@ -30,6 +35,8 @@ public class DarkAgeOfValheim : BaseUnityPlugin
 
     public static readonly ManualLogSource LLogger =
         BepInEx.Logging.Logger.CreateLogSource(MOD_NAME);
+
+    public List<Specialization> specalizations = new List<Specialization>();
 
 
     //Will never actually be null. 
@@ -56,6 +63,7 @@ public class DarkAgeOfValheim : BaseUnityPlugin
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             //GamePlayer gamePlayer = GamePlayer.Instance;
+            loadSpecializations();
         }
         catch (Exception e)
         {
@@ -93,6 +101,44 @@ public class DarkAgeOfValheim : BaseUnityPlugin
     //        Localization.instance.AddWord(translation.Key, translation.Value.ToString());
     //    }
     //}
+
+    protected void loadSpecializations()
+    {
+        string? classData = loadJson("specializations.json");
+        if (String.IsNullOrEmpty(classData)) 
+        {
+            return;
+        }
+        try
+        {
+            specalizations.Add(JsonConvert.DeserializeObject<Specialization>(classData)); //Gives possible null reference error.
+
+            foreach(Specialization spec in specalizations) {
+                Console.Log(spec.name);
+            }
+        } catch (Exception e)
+        {
+            Logger.LogError(e);
+        }
+        return;
+    }
+
+    public string? loadJson(string filePath)
+    {
+        try
+        {
+            string file = Path.Combine(Paths.PluginPath, "Fistekefs-Dark Age of Valheim", DATA_LOCATION, filePath);
+            if (!File.Exists(file))
+            {
+                LLogger.LogError("Unable to find file: " + file);
+                return null;
+            }
+            return File.ReadAllText(file);
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
 
 
     [UsedImplicitly]
