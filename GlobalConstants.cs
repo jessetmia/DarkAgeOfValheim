@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dark_Age_of_Valheim
 {
-    internal class GlobalConstants
+    public class GlobalConstants
     {
         /// <summary>
         /// Holds all character classes

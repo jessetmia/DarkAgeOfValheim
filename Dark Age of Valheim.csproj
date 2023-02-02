@@ -38,12 +38,11 @@
 
 	<ItemGroup>
 	  <Compile Remove="EpicLoot\EpicLoot.cs" />
+	  <Compile Remove="Specalizations\ISpecalization.cs" />
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
   
@@ -52,6 +51,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>C:\Users\Jesse T\AppData\Roaming\Thunderstore Mod Manager\DataFolder\Valheim\profiles\Default\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="assembly_guiutils">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
     </Reference>
@@ -64,14 +66,14 @@
     <Reference Include="assembly_valheim">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
     </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>C:\Users\Jesse T\AppData\Roaming\Thunderstore Mod Manager\DataFolder\Valheim\profiles\Default\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
     <Reference Include="EpicLoot">
       <HintPath>Libs\EpicLoot.dll</HintPath>
     </Reference>
     <Reference Include="EpicMMOSystem">
       <HintPath>Libs\EpicMMOSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Users\Jesse T\.nuget\packages\newtonsoft.json\13.0.2\lib\net6.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
 	<Reference Include="UnityEngine">
 		<HintPath>$(GamePath)\unstripped_corlib\UnityEngine.dll</HintPath>
@@ -91,26 +93,8 @@
 	<Reference Include="UnityEngine.UI">
 		<HintPath>$(GamePath)\unstripped_corlib\UnityEngine.UI.dll</HintPath>
 	</Reference>
-    <Reference Include="BepInEx">
-      <HintPath>$(ThunderStore)\core\BepInEx.dll</HintPath>
-    </Reference>
-	<Reference Include="0Harmony">
-		<HintPath>$(ThunderStore)\core\0Harmony.dll</HintPath>
-	</Reference>
     <Reference Include="EquipmentAndQuickSlots">
       <HintPath>Libs\EquipmentAndQuickSlots.dll</HintPath>
-    </Reference>
-    <Reference Include="Groups">
-      <HintPath>Libs\Groups.dll</HintPath>
-    </Reference>
-    <Reference Include="GroupsAPI">
-      <HintPath>Libs\GroupsAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="ItemManager">
-      <HintPath>Libs\ItemManager.dll</HintPath>
-    </Reference>
-    <Reference Include="LocalizationManager">
-      <HintPath>Libs\LocalizationManager.dll</HintPath>
     </Reference>
     <Reference Include="ServerSync">
       <HintPath>Libs\ServerSync.dll</HintPath>

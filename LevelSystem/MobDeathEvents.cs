@@ -185,7 +185,7 @@ public static class MobDeathEvents
             }
             catch (Exception e)
             {
-
+                DarkAgeOfValheim.LLogger.LogError(e);
             }
         }
     }

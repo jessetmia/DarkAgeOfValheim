@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using Dark_Age_of_Valheim.Abilities;
 using Dark_Age_of_Valheim.Specalizations;
 using EpicLoot.Data;
 using fastJSON;
@@ -36,7 +37,8 @@ public class DarkAgeOfValheim : BaseUnityPlugin
     public static readonly ManualLogSource LLogger =
         BepInEx.Logging.Logger.CreateLogSource(MOD_NAME);
 
-    public List<Specialization> specalizations = new List<Specialization>();
+    public List<Specialization> specializations = new List<Specialization>();
+    public List<Ability> abilities = new List<Ability>();
 
 
     //Will never actually be null. 
@@ -48,7 +50,7 @@ public class DarkAgeOfValheim : BaseUnityPlugin
     //public static readonly ConfigSync ConfigSync = new(DarkAgeOfValheimCFG.MOD_GUID)
     //{ DisplayName = DarkAgeOfValheimCFG.MOD_NAME, CurrentVersion = DarkAgeOfValheimCFG.MOD_VERSION, MinimumRequiredVersion = DarkAgeOfValheimCFG.MOD_VERSION };
 
-    internal static DarkAgeOfValheim? Instance;
+    internal static DarkAgeOfValheim Instance;
 
     [UsedImplicitly]
     public void Awake()
@@ -61,9 +63,8 @@ public class DarkAgeOfValheim : BaseUnityPlugin
             localization = new Localization();
 
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-            //GamePlayer gamePlayer = GamePlayer.Instance;
             loadSpecializations();
+            loadAbilities();
         }
         catch (Exception e)
         {
@@ -104,18 +105,21 @@ public class DarkAgeOfValheim : BaseUnityPlugin
 
     protected void loadSpecializations()
     {
-        string? classData = loadJson("specializations.json");
+        string classData = loadJson("specializations.json");
         if (String.IsNullOrEmpty(classData)) 
         {
             return;
         }
         try
         {
-            specalizations.Add(JsonConvert.DeserializeObject<Specialization>(classData)); //Gives possible null reference error.
+            specializations = JsonConvert.DeserializeObject<List<Specialization>>(classData);
 
-            foreach(Specialization spec in specalizations) {
-                Console.Log(spec.name);
+            foreach (Specialization spec in specializations)
+            {
+                Logger.LogInfo(String.Format("Initializing class: {0}.",spec.name));
             }
+
+
         } catch (Exception e)
         {
             Logger.LogError(e);
@@ -123,7 +127,33 @@ public class DarkAgeOfValheim : BaseUnityPlugin
         return;
     }
 
-    public string? loadJson(string filePath)
+    protected void loadAbilities()
+    {
+        string classData = loadJson("abilities.json");
+        if (String.IsNullOrEmpty(classData))
+        {
+            return;
+        }
+        try
+        {
+            abilities = JsonConvert.DeserializeObject<List<Ability>>(classData);
+
+            foreach (Ability ability in abilities)
+            {
+                Logger.LogInfo(String.Format("Initializing Ability: {0}.", ability.name));
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e);
+        }
+        return;
+
+    }
+
+    public string loadJson(string filePath)
     {
         try
         {
@@ -131,13 +161,14 @@ public class DarkAgeOfValheim : BaseUnityPlugin
             if (!File.Exists(file))
             {
                 LLogger.LogError("Unable to find file: " + file);
-                return null;
+                return String.Empty;
             }
             return File.ReadAllText(file);
         } catch (Exception e)
         {
-            return null;
+            Logger.LogError(e);
         }
+        return String.Empty;
     }
 
 

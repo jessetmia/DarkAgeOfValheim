@@ -11,7 +11,7 @@ public static class TerminalCommands
     private static bool isServer => SystemInfo.graphicsDeviceType
                                     == GraphicsDeviceType.Null;
     private static string modName => DarkAgeOfValheim.MOD_NAME;
-    private static Localization local => DarkAgeOfValheim.localization;
+    private static Localization? local => DarkAgeOfValheim.localization;
 
     [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
     private static class ZrouteMethodsServerFeedback

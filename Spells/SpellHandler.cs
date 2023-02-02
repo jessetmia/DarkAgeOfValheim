@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dark_Age_of_Valheim.Abilities;
+namespace Dark_Age_of_Valheim.Spells;
 
-public abstract class AbilityHandler
+public class SpellHandler
 {
 }

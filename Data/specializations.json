@@ -1,15 +1,24 @@
-{
-  "Specializations": [
-    {
-      "id": 1,
-      "name": "Berserker",
-      "description": "Blank Description",
-      "bonusHp": 75,
-      "bonusStamina": 75,
-      "bonusEitr": 0,
-      "skillLines": { },
-      "acceleratedSkills": { },
-      "classAbilities": { }
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Berserker",
+    "description": "Blank Description",
+    "bonusHp": 75,
+    "bonusStamina": 75,
+    "bonusEitr": 0,
+    "skillLines": [],
+    "acceleratedSkills": [],
+    "classAbilities": []
+  },
+  {
+    "id": 14,
+    "name": "Warrior",
+    "description": "Blank Description",
+    "bonusHp": 100,
+    "bonusStamina": 50,
+    "bonusEitr": 0,
+    "skillLines": [],
+    "acceleratedSkills": [],
+    "classAbilities": []
+  }
+]

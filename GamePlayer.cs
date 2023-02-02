@@ -1,21 +1,21 @@
-﻿using BepInEx;
-using Dark_Age_of_Valheim.Abilities;
-using Dark_Age_of_Valheim.EpicLoot;
+﻿using Dark_Age_of_Valheim.Abilities;
 using Dark_Age_of_Valheim.LevelSystem;
 using Dark_Age_of_Valheim.Specalizations;
-using EpicLoot;
 using EpicMMOSystem;
-using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
+using YamlDotNet.Core.Tokens;
+using static Dark_Age_of_Valheim.GlobalConstants;
 
 namespace Dark_Age_of_Valheim;
 
 public partial class GamePlayer
 {
 
+
+    public const string epicMMOPluginKey = "EpicMMOSystem";
+    public const string middleKey = "LevelSystem";
     /**
      * 
      * @TODO: Split Buffed Stats from Armor and from buffs/pots.
@@ -29,16 +29,13 @@ public partial class GamePlayer
     public int buffedBody { get; set; } = 0;
 
     //Player Class (Healer, Valkrye, Berserker, etc)
-    public ISpecalization? Specalization { get; set; } = null;
+    public Specialization? Specalization { get; set; } = null;
 
-    //Abilities the player has learned.
-    public AbilityHandler[]? Abilities { get; set; } = null;
 
     //Points used to invest in the skill tree
     public int? skillPoints { get; set; } = 0;
-
-    public const string epicMMOPluginKey = "EpicMMOSystem";
-    public const string middleKey = "LevelSystem";
+    //Abilities the player has learned.
+    public List<Ability>? Abilities = new List<Ability>();
 
     public Dictionary<Parameter, int> statBuffs = new Dictionary<Parameter, int>();
 
@@ -63,11 +60,13 @@ public partial class GamePlayer
 
     public GamePlayer()
     {
+        DarkAgeOfValheim.LLogger.LogInfo($"Loading player {Player.m_localPlayer.GetPlayerName()}");
         this.Init();
     }
 
     private void Init()
     {
+        loadPlayer();
         LevelSystemPatch.OnLevelUp += LevelUpAnnouncement;
     }
 
@@ -111,6 +110,37 @@ public partial class GamePlayer
     //@TODO: Move this to the player save file instead of random text.
     public void savePlayer()
     {
+        saveSpecialization();
+    }
+    public void loadPlayer()
+    {
+        Player.m_localPlayer.m_knownTexts[$"{DarkAgeOfValheim.MOD_GUID}_specialization"] = "1";
+        loadSpecialization();
+    }
 
+    protected void saveSpecialization()
+    {
+        if (!Player.m_localPlayer) return;
+        if (Specalization == null) return;
+
+        Player.m_localPlayer.m_knownTexts[$"{DarkAgeOfValheim.MOD_GUID}_specialization"] = Specalization.id.ToString();
+    }
+
+    protected void loadSpecialization()
+    {
+        try
+        {
+            if (Player.m_localPlayer.m_knownTexts.ContainsKey($"{DarkAgeOfValheim.MOD_GUID}_specialization"))
+            {
+                byte specId = Convert.ToByte(Player.m_localPlayer.m_knownTexts[$"{DarkAgeOfValheim.MOD_GUID}_specialization"]);
+                Specalization = DarkAgeOfValheim.Instance.specializations.Find(i => i.id == (byte)specId);
+                DarkAgeOfValheim.LLogger.LogInfo(String.Format("Loading player {0} with class {1}",
+                    Player.m_localPlayer.GetPlayerName(),
+                    Specalization.name));
+            }
+        } catch(Exception e)
+        {
+            DarkAgeOfValheim.LLogger.LogError(e);
+        }
     }
 }

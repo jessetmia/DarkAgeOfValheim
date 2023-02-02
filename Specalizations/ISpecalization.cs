@@ -6,27 +6,27 @@ namespace Dark_Age_of_Valheim.Specalizations;
 
 public interface ISpecalization
 {
-    byte id { get; }
-    string name { get; }
-    string description { get; }
+    byte id { get; set; }
+    string name { get; set;  }
+    string description { get; set;  }
 
     //Dictionary<int, string> title { get; }
 
     //Different classes will have more HP depending on spec. 
-    int bonusHp { get; }
+    int bonusHp { get; set;  }
 
     //Starting Stamina Bonus
-    int bonusStamina { get; }
+    int bonusStamina { get; set;  }
 
     //Starting Mana
-    int bonusEitr { get; }
+    int bonusEitr { get; set;  }
 
     //Custom Skills for the class (dual wield for berserker, stormcalling for thane, etc)
-    Skills[]? skillLines { get; }
+    Skills[]? skillLines { get; set;  }
 
-    Skills[]? acceleratedSkills { get; }
+    Skills[]? acceleratedSkills { get; set;  }
 
-    AbilityHandler[]? classAbilities { get; }
+    Ability[]? classAbilities { get; set;  }
 
     //string getTitle(GamePlayer player, int level);
 }

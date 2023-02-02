@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Increased Stamina Recovery I",
+    "description": "Increase Stamina Regeneration by 5%",
+    "abilityType": "ModifyStaminaRegen",
+    "abilityValue": 5,
+    "levelRequired": 1,
+    "duration": 0,
+    "isPassive": true,
+    "icon": ""
+  }
+]
