@@ -37,8 +37,8 @@ public class DarkAgeOfValheim : BaseUnityPlugin
     public static readonly ManualLogSource LLogger =
         BepInEx.Logging.Logger.CreateLogSource(MOD_NAME);
 
-    public List<Specialization> specializations = new List<Specialization>();
-    public List<Ability> abilities = new List<Ability>();
+    public static List<Specialization> specializations = new List<Specialization>();
+    public static List<Ability> abilities = new List<Ability>();
 
 
     //Will never actually be null. 
@@ -63,8 +63,8 @@ public class DarkAgeOfValheim : BaseUnityPlugin
             localization = new Localization();
 
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
-            loadSpecializations();
             loadAbilities();
+            loadSpecializations();
         }
         catch (Exception e)
         {

@@ -13,6 +13,8 @@ namespace Dark_Age_of_Valheim.Abilities
         public string name { get; set; }
         public string description { get; set; }
 
+        public string abilityGroup { get; set; }
+
         //Type of Ability e.g. IncreaseStaminaRegen. Uses EpicLoot MagicEffects to handle buffs
         public string abilityType { get; set; }
 

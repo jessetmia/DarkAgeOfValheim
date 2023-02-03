@@ -1,10 +1,44 @@
 [
   {
-    "name": "Increased Stamina Recovery I",
+    "name": "Boundless Stamina I",
+    "abilityGroup": "boundlessStamina",
     "description": "Increase Stamina Regeneration by 5%",
     "abilityType": "ModifyStaminaRegen",
     "abilityValue": 5,
     "levelRequired": 1,
+    "duration": 0,
+    "isPassive": true,
+    "icon": ""
+  },
+  {
+    "name": "Boundless Stamina II",
+    "abilityGroup": "boundlessStamina",
+    "description": "Increase Stamina Regeneration by 7%",
+    "abilityType": "ModifyStaminaRegen",
+    "abilityValue": 7,
+    "levelRequired": 7,
+    "duration": 0,
+    "isPassive": true,
+    "icon": ""
+  },
+  {
+    "name": "Boundless Stamina III",
+    "abilityGroup": "boundlessStamina",
+    "description": "Increase Stamina Regeneration by 9%",
+    "abilityType": "ModifyStaminaRegen",
+    "abilityValue": 9,
+    "levelRequired": 15,
+    "duration": 0,
+    "isPassive": true,
+    "icon": ""
+  },
+  {
+    "name": "Boundless Stamina IV",
+    "abilityGroup": "boundlessStamina",
+    "description": "Increase Stamina Regeneration by 12%",
+    "abilityType": "ModifyStaminaRegen",
+    "abilityValue": 12,
+    "levelRequired": 24,
     "duration": 0,
     "isPassive": true,
     "icon": ""

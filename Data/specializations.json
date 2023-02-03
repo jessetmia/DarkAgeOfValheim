@@ -6,9 +6,9 @@
     "bonusHp": 75,
     "bonusStamina": 75,
     "bonusEitr": 0,
-    "skillLines": [],
-    "acceleratedSkills": [],
-    "classAbilities": []
+    "skillLines": "",
+    "acceleratedSkillLines": "",
+    "abilityLines": "boundlessStamina"
   },
   {
     "id": 14,
@@ -17,8 +17,8 @@
     "bonusHp": 100,
     "bonusStamina": 50,
     "bonusEitr": 0,
-    "skillLines": [],
-    "acceleratedSkills": [],
-    "classAbilities": []
+    "skillLines": "",
+    "acceleratedSkillLines": "",
+    "abilityLines": "boundlessStamina"
   }
 ]

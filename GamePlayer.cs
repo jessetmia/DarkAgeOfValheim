@@ -1,9 +1,13 @@
-﻿using Dark_Age_of_Valheim.Abilities;
+﻿using BepInEx;
+using Dark_Age_of_Valheim.Abilities;
 using Dark_Age_of_Valheim.LevelSystem;
 using Dark_Age_of_Valheim.Specalizations;
 using EpicMMOSystem;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
 using YamlDotNet.Core.Tokens;
 using static Dark_Age_of_Valheim.GlobalConstants;
@@ -28,12 +32,15 @@ public partial class GamePlayer
     public int buffedIntellect { get; set; } = 0;
     public int buffedBody { get; set; } = 0;
 
+    public int level { get; set; } = 0;
+
     //Player Class (Healer, Valkrye, Berserker, etc)
     public Specialization? Specalization { get; set; } = null;
 
 
     //Points used to invest in the skill tree
     public int? skillPoints { get; set; } = 0;
+
     //Abilities the player has learned.
     public List<Ability>? Abilities = new List<Ability>();
 
@@ -66,13 +73,14 @@ public partial class GamePlayer
 
     private void Init()
     {
+        level = EpicMMOSystem.LevelSystem.Instance.getLevel();
         loadPlayer();
-        LevelSystemPatch.OnLevelUp += LevelUpAnnouncement;
+        LevelSystemPatch.OnLevelUp += onPlayerLeveled;
     }
 
     public int getBonusPointsForParameter(Parameter parameter)
     {
-        switch(parameter)
+        switch (parameter)
         {
             case Parameter.Strength:
                 {
@@ -97,13 +105,21 @@ public partial class GamePlayer
     /*
      * Notifies clients that Player has leveled up every 10 levels.
      */
-    public void LevelUpAnnouncement(int level)
+    public void levelUpAnnouncement(int level)
     {
         //Add config to enable level notifications 
         if (level % 10 != 0) return;
         Player localPlayer = Player.m_localPlayer;
         string text = string.Format("Player {0} has reached level {1}!", localPlayer.GetPlayerName(), level);
         Chat.instance.RPC_ChatMessage(200, Vector3.zero, 0, "<color=#424242>Notice</color>", text, PrivilegeManager.GetNetworkUserId());
+    }
+
+    public void onPlayerLeveled(int level)
+    {
+        this.level = level;
+        levelUpAnnouncement(level);
+        loadClassAbilities();
+        savePlayer();
     }
 
 
@@ -116,6 +132,7 @@ public partial class GamePlayer
     {
         Player.m_localPlayer.m_knownTexts[$"{DarkAgeOfValheim.MOD_GUID}_specialization"] = "1";
         loadSpecialization();
+        loadClassAbilities();
     }
 
     protected void saveSpecialization()
@@ -133,14 +150,42 @@ public partial class GamePlayer
             if (Player.m_localPlayer.m_knownTexts.ContainsKey($"{DarkAgeOfValheim.MOD_GUID}_specialization"))
             {
                 byte specId = Convert.ToByte(Player.m_localPlayer.m_knownTexts[$"{DarkAgeOfValheim.MOD_GUID}_specialization"]);
-                Specalization = DarkAgeOfValheim.Instance.specializations.Find(i => i.id == (byte)specId);
+                Specalization = DarkAgeOfValheim.specializations.Find(i => i.id == (byte)specId);
                 DarkAgeOfValheim.LLogger.LogInfo(String.Format("Loading player {0} with class {1}",
                     Player.m_localPlayer.GetPlayerName(),
                     Specalization.name));
             }
-        } catch(Exception e)
+        } catch (Exception e)
         {
             DarkAgeOfValheim.LLogger.LogError(e);
         }
+    }
+
+
+    /*
+     * 
+     * First grab all ability groups
+     * 
+     */
+    protected void loadClassAbilities()
+    {
+        if (Specalization == null || Specalization.abilityLines.IsNullOrWhiteSpace()) return;
+        if(!(Abilities is null))
+        {
+            Abilities.Clear();
+        }
+
+        string[] abilityGroups = Specalization.abilityLines.Split(',');
+        foreach (string abilityGroup in abilityGroups)
+        {
+            List<Ability> abilities = DarkAgeOfValheim.abilities.Where(i => i.abilityGroup == abilityGroup).ToList<Ability>();
+            Ability ability = abilities.Where(i => i.levelRequired <= level).OrderByDescending(i => i.levelRequired).ToList<Ability>().First();
+            if (ability is null) { return; }
+
+            DarkAgeOfValheim.LLogger.LogInfo(String.Format("Loading Ability Group {0} for Player {1}", ability.name, Player.m_localPlayer.GetPlayerName()));
+            Abilities.Add(ability);
+        }
+
+
     }
 }
